@@ -1,0 +1,148 @@
+<!DOCTYPE html> <!--Why HTML5,because it's simple, well php could be smater, i might convert later if i feel like it, or there are good arguments for it-->
+<html style="background:#212121;">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> <!-- I have selected a font-family i am familiar with and provides good readability Options.-->
+</head>
+<body>
+  <header>
+    <h1 style="font-family: work sans; font-weight:600; color:darkred; font-size:400%;">EasyFlix</h1> <!-- style might be moved away from the element in the future -->
+  </header>
+
+  <section>
+
+      <div id="response"></div> <!-- We are using the Response Id, which i might rename later, to appendChild after the DOM has completed. Not actually sure if it's after the DOM completes, or but it can be appended on any DOM event listened to, I do this later to automatically load content on scroll down, which improves performance. See ./genre/index.html-->
+      <script type="text/javascript">
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNzQzYWQ4NWM1MTU1NmUzZDgyMDliYzkwMWVlNzY0NiIsIm5iZiI6MTczMzc0NTkxNy40OTQwMDAyLCJzdWIiOiI2NzU2ZGNmZDZlMGJlZDI2NmI3ZmFiM2QiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.3eEChcFzcTubHssYx6QAOY3yIJlmisJQWH3ynQS7uEA'
+        }
+      };
+      function exploreGenre(arg) //need this to be a predifined function with arguments, to avoid all the button's targeting the latest processed genre acquired from a fetch.
+      {
+        let value = arg;
+        window.location.href="./genre/index.html?genre="+value; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
+      }
+      fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options) // These Fetch operations can be moved into functions later
+        .then(res => res.json())
+        //.then(res => console.log(res)) // no need to dump to the log all the time.
+        .then(res => { //Working on the response from code 200 of the API request, we are using a series of loops to access the Genre names and id's.
+        let text = "";
+        const divElement = document.getElementById("response");
+        const obj = res;
+        for (const x in obj) {
+          for (const y in obj[x]) {
+            //console.log(obj[x][y].name);
+              const newNode = document.createElement("div");
+              const newHeader = document.createElement("h1");
+              const genreButton = document.createElement("button");
+              //document.getElementById('response'+i).textContent=text;
+              text = obj[x][y].name;
+              //These below are to be moved into a stylesheet later.
+              divElement.appendChild(newNode);
+              newNode.appendChild(newHeader);
+              newHeader.textContent=text;
+              newNode.appendChild(genreButton);
+              //genreButton.style.size="10% 10%";
+              genreButton.innerHTML="Explore Genre";
+              genreButton.id="GenreBtn"+text;
+              genreButton.style.display="block";
+              genreButton.style.width="40%";
+              genreButton.style.translate="80% -50%";
+              genreButton.style.background="#FF444444";
+              genreButton.style.borderRadius="8px";
+              genreButton.style.fontFamily="Work Sans";
+              genreButton.setAttribute("argument",obj[x][y].id);
+              genreButton.onclick = function(self){ exploreGenre(genreButton.getAttribute("argument")); }
+              genreButton.style.fontSize="150%";
+              genreButton.style.color="white";
+              newNode.style.width='90%';
+              newNode.style.maxHeight='1000px';
+              //newNode.style.height=""+(newNode.getBoundingClientRect().width/5)*(500/750)+"px";
+              newNode.style.maxHeight="1050px";
+              newNode.style.minHeight="265px";
+              newNode.style.boxShadow='10px 10px 3px #AA444444';
+              newNode.style.borderRadius='6px';
+              newNode.style.margin='18px';
+              newNode.style.background='#FF444444';
+              newNode.style.textAlign='center'
+              newHeader.style.fontFamily="Work Sans";
+              newHeader.style.fontWeight="300";
+              newHeader.style.fontSize="300%";
+              //newHeader.style.marginBottom="-15px"
+              newNode.style.justifyContent="space-evenly";
+              newNode.id="Genre-"+text;
+              newHeader.style.color="white";
+
+              console.log(text);
+
+              // fetch movies in genre next
+              fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+obj[x][y].id, options)
+                .then(res2 => res2.json())
+                .then(res2 => {
+                  let poster_path;
+                  let poster_path_arr = [];
+                  let movieTitle_arr = [];
+                  let movie_title;
+                  for (const xx in res2) {
+
+                    for (const yy in res2[xx]) {
+                      poster_path_arr[poster_path_arr.length] = res2[xx][yy].poster_path;
+                      movieTitle_arr[movieTitle_arr.length] = res2[xx][yy].title;
+
+
+                    }
+                  }
+                    for(var i=0;i<4;i++)
+                    {
+                      movie_title = movieTitle_arr[i];
+                      poster_path = poster_path_arr[i];
+                      console.log(poster_path);
+                      const newMovieNode = document.createElement("div");
+                      newNode.appendChild(newMovieNode);
+                      newMovieNode.id='movieNode'+i;
+                      //newMovieNode.style.width=""+newNode.getBoundingClientRect().width/5+"px";
+                      newMovieNode.style.width="20%";
+                      newMovieNode.style.maxWidth="500px";
+                      newMovieNode.style.aspectRatio="500/750";
+
+                      //newMovieNode.style.height=""+ newNode.getBoundingClientRect().height*0.75+"px";
+                      newMovieNode.style.maxHeight=""+750*5+"px";
+                      //newMovieNode.style.height="75%";
+                      newMovieNode.style.backgroundSize="100% 100%";
+                      newMovieNode.style.margin="8px";
+                      newMovieNode.style.display="Inline-flex";
+                      newMovieNode.style.borderRadius="8px";
+                      const movieTitleNode = document.createElement('p');
+                      newMovieNode.appendChild(movieTitleNode);
+                      movieTitleNode.textContent=movie_title;
+                      movieTitleNode.style.fontFamily="Work Sans";
+                      movieTitleNode.style.color="white"
+                      movieTitleNode.style.textShadow="1px 1px 2px black, 0 0 1em red, 0 0 0.2em darkred";
+                      movieTitleNode.style.fontSize="180%";
+                      newMovieNode.style.justifyContent="center";
+                      movieTitleNode.style.translate=" 0px 120%";
+                      newMovieNode.style.marginBottom="25%"
+                      newMovieNode.style.backgroundImage="url(https://image.tmdb.org/t/p/w500"+poster_path+")";
+                    }
+
+                    newHeader.textContent=newHeader.textContent+": "+res2.total_results+" movies";
+                   //console.log(res2) // no need to log this while it works.
+                 })
+                .catch(err2 => console.error(err2));
+            //}
+          }
+
+        }
+
+
+       })
+        .catch(err => console.error(err));
+      </script>
+
+  </section>
+</body>
+</html>
