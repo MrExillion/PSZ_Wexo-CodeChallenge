@@ -38,7 +38,12 @@
         currentDate = Date.now();
       } while (currentDate - date < milliseconds);
     }
-
+    function movieDetailsPage(arg,arg2) //need this to be a predifined function with arguments, to avoid all the button's targeting the latest processed genre acquired from a fetch.
+    {
+      let value = arg;
+      let value2 = arg2;
+      window.location.href="../movie/index.html?movieId="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
+    }
     fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+genreParam, options)
     .then(res => res.json())
     .then(res => {
@@ -80,6 +85,22 @@
             const movieTitle = document.createElement("h1");
             newNode.appendChild(movieTitle);
             movieTitle.textContent=res2[xx][yy].title;
+
+            const moviePageBtn = document.createElement("button");
+            newNode.appendChild(moviePageBtn);
+            moviePageBtn.innerHTML="See More";
+            moviePageBtn.id="MoviePageBtn_"+text;
+            moviePageBtn.style.display="block";
+            moviePageBtn.style.width="40%";
+            moviePageBtn.style.translate="80% -50%";
+            moviePageBtn.style.background="#FF444444";
+            moviePageBtn.style.borderRadius="8px";
+            moviePageBtn.style.fontFamily="Work Sans";
+            moviePageBtn.setAttribute("argument",res2[x][y].id);
+            moviePageBtn.setAttribute("argument2",res2[x][y].title);
+            moviePageBtn.onclick = function(self){ movieDetailsPage(moviePageBtn.getAttribute("argument"),moviePageBtn.getAttribute("argument2")); }
+            moviePageBtn.style.fontSize="150%";
+            moviePageBtn.style.color="white";
             }
           }
 
