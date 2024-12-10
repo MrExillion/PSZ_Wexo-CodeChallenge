@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+.subPageHeader{
+  background-color: var(--headerBg);
+  border-radius: 2em;
+}
+.subPageHeader>h1
+{
+    display: inline-flex;
+    color: white;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Work Sans;
+    font-weight: 500;
+    font-size: 300%;
+}

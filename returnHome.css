@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+#returnHome{
+background-color: var(--bordaux);
+display:block;
+width: 100%;
+height:min-content;
+padding:5%;
+border-radius: 2em;
+font-family: Work Sans;
+font-weight: 600;
+font-size: 200%;
+color:white;
+text-align: center;
+align-content: center;
+
+}
+
+a:has(>#returnHome){
+  display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  width:15%;
+  height:15%;
+  text-decoration-line:none!important;
+
+
+}
+a:has(>#returnHome):visited{
+  width:min-content;
+  text-decoration-line: underline!important;
+  text-decoration-thickness: 2%!important;
+  text-decoration-style: dotted!important;
+  text-decoration-color: pink!important;
+}
+
+
+#returnHome:hover > p{
+color:yellow;
+}
