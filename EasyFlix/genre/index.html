@@ -89,15 +89,15 @@
             const moviePageBtn = document.createElement("button");
             newNode.appendChild(moviePageBtn);
             moviePageBtn.innerHTML="See More";
-            moviePageBtn.id="MoviePageBtn_"+text;
+            moviePageBtn.id="MoviePageBtn_"+res2[xx][yy].title;
             moviePageBtn.style.display="block";
             moviePageBtn.style.width="40%";
             moviePageBtn.style.translate="80% -50%";
             moviePageBtn.style.background="#FF444444";
             moviePageBtn.style.borderRadius="8px";
             moviePageBtn.style.fontFamily="Work Sans";
-            moviePageBtn.setAttribute("argument",res2[x][y].id);
-            moviePageBtn.setAttribute("argument2",res2[x][y].title);
+            moviePageBtn.setAttribute("argument",res2[xx][yy].id);
+            moviePageBtn.setAttribute("argument2",res2[xx][yy].title);
             moviePageBtn.onclick = function(self){ movieDetailsPage(moviePageBtn.getAttribute("argument"),moviePageBtn.getAttribute("argument2")); }
             moviePageBtn.style.fontSize="150%";
             moviePageBtn.style.color="white";
