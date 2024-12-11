@@ -54,12 +54,19 @@
         let aspectratio = (1920/1080);
         l_videoplayer.setAttribute("height",mov.size);
         l_videoplayer.setAttribute("width",mov.size*aspectratio);
-        l_videoplayer.setAttribute("src","https://www.youtube.com/embed/"+mov.key);
+
         l_videoplayer.setAttribute("title",mov.name);
         l_videoplayer.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
         l_videoplayer.setAttribute("frameborder",0);
-        l_videoplayer.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-        l_videoplayer.setAttribute("allowfullscreen",true);
+        l_videoplayer.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen;");
+        l_videoplayer.setAttribute("id","videoplayer");
+        l_videoplayer.setAttribute("mozallowfullscreen","mozallowfullscreen");
+        l_videoplayer.setAttribute("msallowfullscreen","msallowfullscreen");
+        l_videoplayer.setAttribute("oallowfullscreen","oallowfullscreen");
+        l_videoplayer.setAttribute("webkitallowfullscreen","webkitallowfullscreen");
+        l_videoplayer.setAttribute("src","https://www.youtube.com/embed/"+mov.key);
+
+        //l_videoplayer.setAttribute("allowfullscreen","allowfullscreen");
       })
       .catch(err => console.log(err));
 
