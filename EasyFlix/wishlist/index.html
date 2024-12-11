@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--link rel="stylesheet" href="./movieTile.css"-->
+    <link rel="stylesheet" href="../globalStyles.css">
+  </head>
+<body>
+<header class="subPageHeader">
+  <a target="_self" href="../index.html">
+    <div id='returnHome'>
+      <p>Home</p>
+  </div>
+</a>
+<h1 id="pagetitle"></h1>
+</header>
+<section>
+  <div id="response"></div>
+  <script type="text/javascript">
+    let hrfString = window.location.href.toString();
+    let url = new URL(hrfString);
+    let movieIdParam = url.searchParams.get("movieId");
+    const divElement = document.getElementById("response");
+    const fetchJSONDataCallback = new Event("JSONDataCallback",{"bubbles":true,"cancelable":false});
+    function fetchJSONData() {
+
+                    fetch('./wishlistdata.json')
+                    .then(res=>
+                      {
+                      if (!res.ok)
+                          {
+                              throw new Error
+                                        (`HTTP error! Status: ${res.status}`);
+                          }
+                          return res.json()
+                      })
+                    .then(data=> {
+                        console.log(data);
+                        divElement.setAttribute("data",JSON.stringify(data));
+
+                        //for(const x in data)
+                        //{
+                        //  console.log(x);
+                        //  divElement.setAttribute(""+toString(x),JSON.stringify(data[x]));
+                        //}
+
+
+
+                    })
+
+                    .catch(err => console.log(err))
+                    .finally(()=>window.dispatchEvent(fetchJSONDataCallback));
+
+
+    }
+    fetchJSONData();
+    function parseJSON(){ return JSON.parse(divElement.getAttribute("data"));}
+    window.addEventListener("JSONDataCallback",async function(){const _script = document.createElement("script"); document.getElementById("response").parentElement.appendChild(_script); _script.innerHTML = "const wishlistdata = parseJSON(); console.log(wishlistdata); console.log('Heed my engineering skills');"})
+</script>
+<script type="text/javascript" >
+//  let block = true;
+//  function returnBoolFunc(arg){arg = false;}
+//  setTimeout(returnBoolFunc(block)
+//, 2000);
+
+
+    //function parseJSON(){ return JSON.parse(divElement.getAttribute("data"));}
+
+
+      //while(parseJSON() == true){}
+
+      //}
+        //try{
+          //const wishlistdata = parseJSON();
+        //}
+        //catch{
+    //      console.log(error);
+        //}
+  //}
+
+
+
+  //console.log(wishlistdata);
+
+  </script>
+</section>
+</body>
+</html>
