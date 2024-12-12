@@ -4,4 +4,8 @@
   --darkmodeSiteBg:#212121;
   --lightmodeSiteBg:white;
   --darkOrange:#e54d01;
+  --lightmodeGenreBackgroundShadow: rgb(145 35 0) 10px 10px 3px;
+  --lightmodeGenreBackground: #8b2d2d; /*darkred can be used also*/
+  --textColorPageTitle: white;
+  --textColorWebsiteName: darkred;
 }
