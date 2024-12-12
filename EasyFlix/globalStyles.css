@@ -2,11 +2,13 @@
 @import url('./subPageHeader.css');
 @import url('./colorDefinitions.css');
 html,body{
-  @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     background: var(--darkmodeSiteBg);
   }
 @media (prefers-color-scheme: light)
   {
     background: var(--lightmodeSiteBg);
   }
+  width:100%;
+
 }
