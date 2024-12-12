@@ -12,7 +12,7 @@ font-size: 200%;
 color:white;
 text-align: center;
 align-content: center;
-
+min-width: fit-content;
 }
 
 a:has(>#returnHome){

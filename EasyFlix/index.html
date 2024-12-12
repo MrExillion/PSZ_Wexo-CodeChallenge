@@ -1,10 +1,11 @@
 <!DOCTYPE html> <!--Why HTML5,because it's simple, well php could be smater, i might convert later if i feel like it, or there are good arguments for it-->
-<html style="background:#212121;">
+<html>
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> <!-- I have selected a font-family i am familiar with and provides good readability Options.-->
   <link rel="stylesheet" href="./MoviePosterAnchor.css">
+  <link rel="stylesheet" href="./globalStyles.css">
 </head>
 <body>
   <header>
@@ -27,7 +28,7 @@
       {
         let value = arg;
         let value2 = arg2;
-        window.location.href="./genre/index.html?genre="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
+        window.location.href="./genre/?genre="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
       }
       fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options) // These Fetch operations can be moved into functions later
         .then(res => res.json())
@@ -112,7 +113,7 @@
                       const newMovieAnchor = document.createElement("a");
                       const newMovieNode = document.createElement("div");
                       newNode.appendChild(newMovieAnchor);
-                      newMovieAnchor.href="./movie/index.html?movieId="+movie_Id+"&name="+movie_title;
+                      newMovieAnchor.href="./movie/?movieId="+movie_Id+"&name="+movie_title;
                       newMovieAnchor.target="_self";
                       newMovieAnchor.style.width="20%";
                       newMovieAnchor.style.maxWidth="500px";

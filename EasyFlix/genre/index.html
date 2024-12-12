@@ -6,7 +6,7 @@
   </head>
 <body>
 <header class="subPageHeader">
-  <a target="_self" href="../index.html">
+  <a target="_self" href="../">
     <div id='returnHome'>
       <p>Home</p>
   </div>
@@ -42,7 +42,7 @@
     {
       let value = arg;
       let value2 = arg2;
-      window.location.href="../movie/index.html?movieId="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
+      window.location.href="../movie/?movieId="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
     }
     fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+genreParam, options)
     .then(res => res.json())
