@@ -52,11 +52,12 @@
             console.log(mov);
         }
         const l_videoplayer = document.getElementById("TrailerFrame");
+        document.documentElement.style.overflowX="hidden";
         let aspectratio = (1080/1920);
-        l_videoplayer.setAttribute("height",window.innerWidth*aspectratio);
-        l_videoplayer.setAttribute("width",window.innerWidth);
+        l_videoplayer.setAttribute("height",(window.innerWidth -32)*aspectratio);
+        l_videoplayer.setAttribute("width",(window.innerWidth -32));
         //dwindow.addEventListener("resize", (event) => {});
-        window.onresize = ()=> {l_videoplayer.setAttribute("height",window.innerWidth*aspectratio);
+        window.onresize = ()=> {l_videoplayer.setAttribute("height",((window.innerWidth -32)*aspectratio));
         l_videoplayer.setAttribute("width",window.innerWidth);}
         l_videoplayer.setAttribute("title",mov.name);
         l_videoplayer.setAttribute("referrerpolicy","strict-origin-when-cross-origin");

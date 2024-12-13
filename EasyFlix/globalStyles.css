@@ -2,6 +2,7 @@
 @import url('./subPageHeader.css');
 @import url('./colorDefinitions.css');
 html,body{
+
 @media (prefers-color-scheme: dark) {
     background: var(--darkmodeSiteBg);
   }
@@ -12,3 +13,9 @@ html,body{
   width:100%;
 
 }
+
+  @media (hover: none), (hover: on-demand), (-moz-touch-enabled: 1), (pointer:coarse) {
+    body{
+        margin:0;
+      }
+  }

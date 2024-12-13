@@ -1,0 +1,30 @@
+  :root{
+    --minHeight: 265px;
+  }
+ div>div{
+  width:90%;
+  max-height:1000px;
+  min-height:var(--minHeight);
+  box-shadow:10px 10px 3px #AA444444;
+  border-radius:6px;
+  margin:18px;
+  background:#5c2a2a;
+  text-align:center;
+  justify-content:space-evenly;
+  >button{
+            display:block;
+            width:40%;
+            translate:80% 60%;
+            background:#FF444444;
+            border-radius:8px;
+            font-family:Work Sans;
+            font-size:150%;
+            color:white;
+  }
+  >h1{
+    font-family:Work Sans;
+    font-weight:300;
+    font-size:300%;
+    color:white;
+  }
+}

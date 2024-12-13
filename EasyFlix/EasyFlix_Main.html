@@ -1,0 +1,63 @@
+  <header>
+    <h1 style="font-family: work sans; font-weight:600; color:darkred; font-size:400%;text-align: center;">EasyFlix</h1> <!-- style might be moved away from the element in the future -->
+  </header>
+  <section>
+      <!-- We are using the div tagged #response, which i might rename later, to appendChild after the DOM has completed. Not actually sure if it's after the DOM completes, or but it can be appended on any DOM event listened to, I do this later to automatically load content on scroll down, which improves performance. See ./genre/index.html-->
+      <div id="response" style="display: flex; flex-direction: column; flex-wrap: nowrap; align-content: center; align-items: center;">
+      </div>
+      <script type="text/javascript">
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNzQzYWQ4NWM1MTU1NmUzZDgyMDliYzkwMWVlNzY0NiIsIm5iZiI6MTczMzc0NTkxNy40OTQwMDAyLCJzdWIiOiI2NzU2ZGNmZDZlMGJlZDI2NmI3ZmFiM2QiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.3eEChcFzcTubHssYx6QAOY3yIJlmisJQWH3ynQS7uEA'
+        } //Yes I know, I shouldn't have a Bearer token publicly in the repository, but or code for that matter, but for now it's not that serious.
+      };
+      //First fetch call to the API is to get a list of genres, and we use the promise chain to construct out elements with some Templates, some mixins both stylesheet and script included. There are Fetch calls nested in this chain, as they are needed.
+      fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options) // These Fetch operations can be moved into functions later
+        .then(res => res.json())
+        .then(res => {
+        let text = ""; //Going to use this let for the genre names, during the construction.
+        const divElement = document.getElementById("response"); // this constant will be our container for the entire appending of the template content.
+        const obj = res; //we are going to pass around references, within this context, where res, might be used in ambigous ways, so we use a constant to keep spcecificity.
+
+        //we are interested in the data inside the JSON nested in the JSON we get from the response obj.
+        //for this reason we are going to iterate through the obj with a couple of for loops.
+
+        for (const x in obj) {
+          for (const y in obj[x]) {
+              //next we're going to need some constants to implement the Templates for the Genres.
+              //Each template comes with a Stylesheet and Script body as mixins. So we save them as Arrays to keep them together.
+              // [0: HTML Template container]
+              // [1: Stylesheet Mixin]
+              // [2: Script Mixin Body]
+              const genreCardTemplate = [document.getElementById("EasyFlix_GenreCard_Template"),document.getElementById("EasyFlix_GenreCard_Template_CSSMixin"),document.getElementById("EasyFlix_GenreCard_Template_JSMixin")];
+              const newNode = [genreCardTemplate[0].content.firstElementChild.cloneNode(true),genreCardTemplate[1].content.firstElementChild.cloneNode(true),genreCardTemplate[2].content.firstElementChild.cloneNode(true)];
+
+              //now we are ready to build the Genre Category Card, so we start by appending the cloned template to the #response container div.
+              divElement.appendChild(newNode[0]);
+
+              text = obj[x][y].name;
+              newNode[0].id="Genre-"+text;
+              newNode[0].parentElement.appendChild(newNode[1]);
+              newNode[0].parentElement.appendChild(newNode[2]);
+                // set up Explore genre button through mixin, using the category div (newNode[0])
+                // then we apply the Button specifics such as onClick behaviour, for that we need the genre Information in the form of obj[x][y] and to parse the constant of the button Element.
+                const genreButton = getGenreButtonElement(newNode[0]);
+                applyGenreButtonSpecifics(genreButton,obj[x][y],text);
+                // set up Header constant through mixin, using the category div (newNode[0])
+                const newHeader = getGenreHeaderElement(newNode[0]);
+                newHeader.textContent=text;
+
+              //populateGenreCardWithMovies(genre_id) contains a fetch, to keep readability, and modularity these are contained in the mixins
+              /// Contains Fetch Request https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+obj[x][y].id
+              populateGenreCardWithMovies(obj[x][y].id,newNode[0],newHeader,newNode[1].style);
+
+          }
+        }
+       })
+        .catch(err => console.error(err));
+
+      </script>
+
+  </section>

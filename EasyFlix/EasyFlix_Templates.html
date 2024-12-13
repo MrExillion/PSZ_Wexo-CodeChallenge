@@ -1,0 +1,167 @@
+<!- GenreCard Templates-->
+<template id="EasyFlix_GenreCard_Template">
+<div>
+<button isGenreButton>Explore Genre</button>
+<h1 isGenreHeader></h1>
+</div>
+</template>
+
+<template id="EasyFlix_GenreCard_Template_JSMixin">
+<script type="text/javascript">
+function getGenreHeaderElement(genreCardElement){
+  let children = genreCardElement.childNodes;
+  for(var x = 0; x<children.length;x++)
+  {
+
+    if(children[x] instanceof HTMLElement )
+      {
+
+      if(children[x].hasAttribute("isGenreHeader"))
+        {
+          return children[x];
+        }
+      }
+  }
+  console.log(children);
+  throw new console.error("can't return type h1 with the specified argument");
+}
+function getGenreButtonElement(genreCardElement){
+  let children = genreCardElement.childNodes;
+  for(var x = 0; x<children.length;x++)
+  {
+
+    if(children[x] instanceof HTMLElement )
+      {
+
+      if(children[x].hasAttribute("isGenreButton"))
+        {
+          return children[x];
+        }
+      }
+  }
+  console.log(children);
+  throw new console.error("can't return type Button with the specified argument");
+}
+function applyGenreButtonSpecifics(btn,arg2,text)
+  {
+
+    btn.innerHTML="Explore Genre";
+    btn.id="GenreBtn"+text;
+
+    btn.setAttribute("argument",arg2.id); //obj[x][y].id);
+    btn.setAttribute("argument2",arg2.name); //obj[x][y].name);
+    btn.onclick = function(self){ exploreGenre(btn.getAttribute("argument"),btn.getAttribute("argument2")); }
+  }
+  function exploreGenre(arg,arg2) //need this to be a predifined function with arguments, to avoid all the button's targeting the latest processed genre acquired from a fetch.
+  {
+    let value = arg;
+    let value2 = arg2;
+    window.location.href="./genre/?genre="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
+  }
+
+  function populateGenreCardWithMovies(genre_id,container,genre_header,style)
+  {
+    function appendMovieCountToHeader(genre_header,count)
+    {
+      genre_header.textContent=genre_header.textContent+": "+count+" movies";
+    }
+    // fetch movies in genre next
+    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+genre_id, options)
+      .then(res => res.json())
+      .then(res => {
+
+
+        let poster_path;
+        let poster_path_arr = [];
+        let movieTitle_arr = [];
+        let movie_title;
+        let movie_Id;
+        let movie_Id_arr = [];
+
+        for (const xx in res) {
+
+          for (const yy in res[xx]) {
+            poster_path_arr[poster_path_arr.length] = res[xx][yy].poster_path;
+            movieTitle_arr[movieTitle_arr.length] = res[xx][yy].title;
+            movie_Id_arr[movie_Id_arr.length] = res[xx][yy].id;
+
+
+          }
+        }
+          for(var i=0;i<4;i++)
+          {
+            movie_title = movieTitle_arr[i];
+            poster_path = poster_path_arr[i];
+            movie_Id = movie_Id_arr[i];
+            console.log(poster_path);
+            const newMovieAnchor = document.createElement("a");
+            const newMovieNode = document.createElement("div");
+            container.appendChild(newMovieAnchor);
+            newMovieAnchor.href="./movie/?movieId="+movie_Id+"&name="+movie_title;
+            newMovieAnchor.target="_self";
+            newMovieAnchor.style.width="20%";
+            newMovieAnchor.style.maxWidth="500px";
+            newMovieAnchor.style.aspectRatio="500/750";
+            newMovieAnchor.appendChild(newMovieNode);
+            newMovieAnchor.setAttribute("class","MoviePosterAnchor");
+            newMovieNode.id='movieNode'+i;
+            newMovieNode.style.width="20%";
+            newMovieNode.style.maxWidth="500px";
+            newMovieNode.style.aspectRatio="500/750";
+
+            //we are using this conditional below to ensure responsive behaviour of the title texts above max cover resolution.
+            if(i==0){
+              window.addEventListener("resize", e =>{
+               if(parseInt( newMovieAnchor.style.maxWidth,10) <= parseInt( newMovieAnchor.getBoundingClientRect().width,10))
+                 {
+                   document.documentElement.style.setProperty("--minHeight","1200px");
+                 }
+                 else
+                 {
+                   document.documentElement.style.setProperty("--minHeight","265px");
+                 }
+
+               });
+               if(parseInt( newMovieAnchor.style.maxWidth,10) <= parseInt( newMovieAnchor.getBoundingClientRect().width,10))
+                 {
+                   document.documentElement.style.setProperty("--minHeight","1200px");
+                 }
+                 else
+                 {
+                   document.documentElement.style.setProperty("--minHeight","265px");
+                 }
+            }
+            newMovieNode.style.maxHeight=""+750*5+"px";
+            //newMovieNode.style.height="75%";
+            newMovieNode.style.backgroundSize="100% 100%";
+            newMovieNode.style.margin="8px";
+            newMovieNode.style.display="Inline-flex";
+            newMovieNode.style.borderRadius="8px";
+            const movieTitleNode = document.createElement('p');
+            newMovieNode.appendChild(movieTitleNode);
+            movieTitleNode.textContent=movie_title;
+            movieTitleNode.style.fontFamily="Work Sans";
+            movieTitleNode.style.color="white"
+            movieTitleNode.style.textShadow="1px 1px 2px black, 0 0 1em red, 0 0 0.2em darkred";
+            movieTitleNode.style.fontSize="180%";
+            newMovieNode.style.justifyContent="center";
+            movieTitleNode.style.translate=" 0px 35%";
+            movieTitleNode.style.paddingTop="100%";
+            //movieTitleNode.style.marginTop="100%";
+            newMovieNode.style.marginBottom="20em"
+            newMovieNode.style.backgroundImage="url(https://image.tmdb.org/t/p/w500"+poster_path+")";
+          }
+
+          appendMovieCountToHeader(genre_header,res.total_results);
+
+         //console.log(res2) // no need to log this while it works.
+       })
+      .catch(err => console.error(err));
+  }
+
+
+</script>
+</template>
+<template id="EasyFlix_GenreCard_Template_CSSMixin">
+<link rel="stylesheet" href="./EasyFlix_GenreCard_Template_CSS.css"/>
+</template>
