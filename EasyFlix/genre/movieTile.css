@@ -36,3 +36,21 @@ aspect-ratio: 750 / 500;
   width: 60%;
   align-content: flex-start;
 }
+
+*.image-container{
+    /* width:40vw;
+    height: 60vh;
+    background-color: #000; */
+}
+*.image-container img{
+    width: 100%!important;
+    height: 100%!important;
+    /*object-fit: cover; */
+}
+.background{
+    /* width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+}

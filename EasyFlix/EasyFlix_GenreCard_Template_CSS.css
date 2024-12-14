@@ -20,6 +20,8 @@
             font-family:Work Sans;
             font-size:150%;
             color:white;
+            box-shadow: inset black 0px -10px 25px;
+            &:hover{box-shadow: inset var(--darkOrange) 0px 10px 25px 2px;}
   }
   >h1{
     font-family:Work Sans;
