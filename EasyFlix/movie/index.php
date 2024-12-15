@@ -11,6 +11,13 @@
       <p>Home</p>
   </div>
 </a>
+<a target="_self" href="javascript:history.back()">
+  <div id='returnHome'>
+    <p>Back</p>
+</div></a>
+<?php
+include("../easyflixheadertitle.svg");
+?>
 <h1 id="pagetitle"></h1>
 </header>
 <section>
@@ -103,6 +110,27 @@
 
   </script>
 <!--iframe width="1280" height="720" src="https://www.youtube.com/embed/rxPRhy276ls" title="Official Trailer - MY LIFE WITHOUT ME (2003, Sarah Polley, Scott Speedman)" ></iframe-->
+
 </section>
+<section>
+<div style="width:500px; height: 1000px; backdrop-filter: blur(6px);">
+
+</div>
+</section>
+<style>
+  body, body>*{
+    backdrop-filter: blur(6px);
+    /* height: -webkit-fill-available; */
+    width: 100vw;
+    heith: 100vh;
+    }
+    html{
+      width: 100vw;
+      heith: 100vh;
+      background-image: url('https://media.istockphoto.com/id/1494642262/photo/people-in-the-cinema-auditorium-with-empty-white-screen.jpg?s=612x612&w=0&k=20&c=wiVYHafqEAlvufaCpOTZhn9wuklrgKHdDHWqpmMGhjw=');
+    }
+</style>
+
 </body>
+
 </html>

@@ -2,6 +2,10 @@
 .subPageHeader{
   background-color: var(--headerBg);
   border-radius: 2em;
+  position: fixed;
+  /* margin-top: -5%; */
+  width: -webkit-fill-available;
+  z-index: 2;
 
 }
 .subPageHeader>h1
@@ -16,8 +20,22 @@
     text-align: center;
     font-family: Work Sans;
     font-weight: 500;
-    font-size: 300%;
+    @media :not(screen)
+    {
+      font-size: 300%;
+    }
+
+    @media only screen and (min-width: 1200px) and (orientation: portrait){
+      font-size: 300%;
+    }
+    @media only screen and (min-width: 800px) and (orientation: landscape){
+      font-size: 200%;
+    }
+    @media only screen and (max-width: 500px) and (orientation: portrait) {
+      font-size: 100%;
+    }
     margin-top: 0%;
     margin-bottom: 0%;
     vertical-align: sub;
+    overflow-wrap: anywhere;
 }

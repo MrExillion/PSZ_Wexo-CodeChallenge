@@ -1,0 +1,128 @@
+<svg class="warp" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="620px" height="450px" viewBox="250 -50 60 50">
+
+   <!-- Proudly created with CSSWARP: www.csswarp.com -->
+
+   <!-- Inline links won't work if SVG is embedded as image. Always embed as object or inline SVG instead. -->
+   <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans:regular" media="all" type="text/css" />
+
+   <style>
+     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+       <![CDATA[
+
+           .warp__placeholder{
+               position: absolute;
+               color: transparent;
+               font-size: .1px;
+           }
+
+           .warp {
+             display: inline-flex;
+             position: relative;
+             /* width: auto; */
+             /* height: auto; */
+             font: normal 94px / 1 'Work Sans';
+             /* animation: ease-in-out 2.5s infinite linear; */
+             /* font-family: work sans; */
+             font-family: "Bebas Neue", sans-serif;
+             font-weight: 800;
+             fill: darkred;
+             font-size: 950%;
+             text-align: center;
+             /* scale: 10%; */
+             @media all and (max-width: 2400px) {
+             scale: 10%;
+             }
+             @media all and (min-width: 2401px) {
+             scale: 5%;
+             }
+             height: min-content;
+             width: 25%;
+             left: 0;
+             margin-top: -8%;
+             margin-bottom: -8.5%;
+             /* translate: 0% 40%; */
+             overflow: visible;
+             /* top: 1.6em;*/
+
+           }
+
+           [class*='warp__'] {
+               transform-box:fill-box;
+           }
+
+           .warp__0 {
+               transform-origin: 30px 58px;
+               /* transform:translate(18.3114px, 43.4019px) rotate(-0.384468rad) skewX(-0.384468rad) scaleY(0.926998098971413); */
+               transform:translate(62.3114px, 33.4019px) rotate(-0.384468rad) skewX(-0.384468rad) scaleY(0.926998098971413);
+             }
+
+           .warp__1 {
+               transform-origin: 26px 58px;
+               /* transform:translate(103.3458px, 19.061000000000007px) rotate(-0.183979rad) skewX(-0.183979rad) scaleY(0.9831235476818541); */
+               transform:translate(121.3458px, 23.061px) rotate(-0.183979rad) skewX(-0.183979rad) scaleY(0.9831235476818541);
+         }
+
+           .warp__2 {
+               transform-origin: 25px 58px;
+               transform: translate(186.4443px, 15.139600000000002px) rotate(-0.02357rad) skewX(-0.02357rad) scaleY(0.9997222404093509);
+           }
+
+           .warp__3 {
+               transform-origin: 24px 58px;
+               transform: translate(250.52480000000003px, 15.160600000000002px) rotate(0.008233rad) skewX(0.008233rad) scaleY(0.9999661090469345);
+           }
+
+           .warp__4 {
+               transform-origin: 28px 58px;
+               transform: translate(326.2515px, 15.723500000000001px) rotate(0.029014rad) skewX(0.029014rad) scaleY(0.999579123428162);
+           }
+
+           .warp__5 {
+               transform-origin: 14px 58px;
+               /* transform: translate(402.2476px, 17.680499999999995px) rotate(0.100338rad) skewX(0.100338rad) scaleY(0.9949703647472142); */
+               transform:translate(392.2476px, 13.6805px) rotate(0.100338rad) skewX(0.100338rad) scaleY(0.9949703647472142);
+             }
+
+           .warp__6 {
+               transform-origin: 12px 58px;
+               transform: translate(455.3513px, 19.956100000000006px) rotate(0.168345rad) skewX(0.168345rad) scaleY(0.9858634137990969);
+           }
+
+           .warp__7 {
+               transform-origin: 25px 58px;
+               /* transform: translate(497.6795px,26.629999999999995px) rotate(0.329179rad) skewX(0.329179rad) scaleY(0.9463080639891666); */
+               transform:translate(497.6795px,33.63px) rotate(0.329179rad) skewX(0.329179rad) scaleY(0.946308);
+             }
+
+       ]]>
+   </style>
+
+   <title>EasyFlix</title>
+
+   <g aria-role="presentation">
+       <text class="warp__0">
+           E
+       </text>
+       <text class="warp__1">
+           a
+       </text>
+       <text class="warp__2">
+           s
+       </text>
+       <text class="warp__3">
+           y
+       </text>
+       <text class="warp__4">
+           F
+       </text>
+       <text class="warp__5">
+           l
+       </text>
+       <text class="warp__6">
+           i
+       </text>
+       <text class="warp__7">
+           x
+       </text>
+   </g>
+</svg>

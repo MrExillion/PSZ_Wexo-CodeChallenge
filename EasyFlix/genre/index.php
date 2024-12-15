@@ -20,13 +20,41 @@
   <a target="_self" href="../">
     <div id='returnHome'>
       <p>Home</p>
-  </div>
-</a>
-<h1 id="pagetitle"></h1>
+  </div></a>
+  <a target="_self" href="javascript:history.back()">
+    <div id='returnHome'>
+      <p>Back</p>
+  </div></a>
+<!-- <svg viewBox="0 0 300 150"  style="height:10%;
+ width: 10%;
+ left: 0;
+ top: 0; margin-top:-5%; translate:0% 40%;">
+    <path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" style="fill: transparent; width:100%;"/>
+    <text width="100" style="/*animation: ease-in-out 2.5s infinite linear;*/font-family: work sans; font-weight:600; fill:darkred; font-size:400%;text-align: center;">
+      <textPath xlink:href="#curve">
+        EasyFlix
+      </textPath>
+    </text>
+  </svg>
+   -->
+   <?php
+   include("../easyflixheadertitle.svg");
+   ?>
+   <h1 id="pagetitle"></h1>
 </header>
 <section>
 <!-- Content Starts Here -->
-    <div id="response"></div>
+    <div id="response" >
+    </div>
+    <style media="all">
+      /* div>#Movie_P1_N0.movietile */
+      *>div:not(.movieTile)
+      {
+      padding-top: 8%;
+      /* padding-top: 5%; */
+      }
+    </style>
+    <ScrollRestoration />
     <script type="text/javascript" crossorigin="Anonymous">
     const options = {
       method: 'GET',
@@ -36,7 +64,7 @@
       }
     };
     const fetchCompletionCallback = new Event("fetchcompletion",{"bubbles":true,"cancelable":false});
-
+    let count = 0;
 
     let hrfString = window.location.href.toString();
     let url = new URL(hrfString);
@@ -72,14 +100,15 @@
       let value2 = arg2;
       window.location.href="../movie/?movieId="+value+"&name="+value2; // could use both cookies and params, but i think it's a bit simpler to use params in terms of transparency.
     }
-    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+genreParam, options)
+  async function LoadContent(){
+  let CountRecieved = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres='+genreParam, options)
     .then(res => res.json())
     .then(res => {
       pages = res.total_pages;
       console.log(res.total_pages);
       console.log(pages);
       let movieCoverClassArrayPageSize;
-
+      count = res.total_results;
       async function asyncWrapper_first10PagesLoad()
         {
           let isReady = [];
@@ -530,11 +559,22 @@
             }
         }
     };
-    document.getElementById("pagetitle").textContent
-      = "EasyFlix/"
-      +nameParam;
+
+    (count != undefined)
+    {
+      document.getElementById("pagetitle").textContent
+        = "/"
+        +nameParam
+        +": "+count+" movies";
+    }
+  }
+  LoadContent();
+    console.log(window.history.scrollRestoration);
+  // window.history.scrollRestoration = "auto"
+      // genre_header.textContent=genre_header.textContent;
     window.dispatchEvent(fetchCompletionCallback);
     </script>
+
   </section>
 </body>
 </html>
