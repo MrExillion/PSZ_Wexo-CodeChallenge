@@ -214,14 +214,14 @@
               // await movieCover.onload () => {
 
             //};
-            sleep(120);
+            //sleep(120);
             return imageReady;
             })
 
             .catch(err => console.error(err))
             // .imageReady(imageReady => imageReady.status)
           }
-          console.log(isReady[9], !isReady[9] == null);
+          //console.log(isReady[9], !isReady[9] == null);
           function areAllPagesReady(arr)
           {
             for(let k=0;k<arr.length;k++)
@@ -302,12 +302,11 @@
                     }
                       getDominantImageColor = async ()=>
                     {
-                          // get the image
-
                           //console.log(movieCover);
                           // get the background element
                           let background = await document.getElementById("Movie_P"+i+"_N"+j); //.querySelector(".background");
                           //console.log(background);
+                          // wrapper to await background image is ready, this might be obsolete now.
                            awaitLoadLastPage = async ()=>
                             {
                               let completed = await background.getElementsByTagName('img')[0].completed;
@@ -317,7 +316,8 @@
 
                           // get color palette
                           let color = await Integrationliketest(5,sourceImage);
-                          console.log("rgba(" + color + ",255);");
+                          //console.log("rgba(" + color + ",255);");
+                          // make sure the text is readable after color change;
                           let p = await background.getElementsByTagName('p');
                           let h1 = await background.getElementsByTagName('h1');
                           if(((color[0]+color[1]+color[2])/3)<(255/3)*2){
@@ -343,29 +343,15 @@
                                      h1[k].style.color = '#000';
                               }
                             }
+                          let css = document.createElement("style");
+                          css.innerHTML = ":root{--contextHover_"+background.id+": rgba("+color+",255);}";
+                          newNode.appendChild(css);
                           // set the background color
-                          //background.style.background = "rgba(" + color + ",255);";
-                          let css = await background.getElementsByTagName('style')[0];
-                          // if(document.documentElement.getAttribute("style") == null){
-                          //   document.documentElement.setAttribute("style",":root{--contextHover_"+background.id+": rgba("+color+",255);}");
-                          // }
-                          // document.documentElement.setAttribute("style",document.documentElement.getAttribute("style").replace(/.$/,"--contextHover_"+background.id+": rgba("+color+",255);}"));
-                          // document.documentElement.style.setProperty("contextHover_"+background.id,"rgba("+color+",255);");
-                          console.log(css.innerHTML,"var(--contextHover_"+newNode.id+")");
-                           // css.innerHTML.replace("var(--contextHover_"+newNode.id+")", "rgba("+color+",255)");
-                          let css2 = document.createElement("style");
-                            css2.innerHTML = ":root{--contextHover_"+background.id+": rgba("+color+",255);}";
-                            //css.innerHTML.replace("var(--contextHover_"+newNode.id+") 0px 10px 25px 2px", "rgba("+color+",255) 0px 10px 25px 2px !important");
-                            newNode.appendChild(css2);
-
-                          console.log(background.style.background,"Movie_P"+i+"_N"+j);
-                          background.setAttribute("style",background.getAttribute("style")+" background: rgba(" + color + ",255);");
+                          background.setAttribute("style",background.getAttribute("style")+" background: var(--contextHover_"+newNode.id+");");
+                          // console.log(background.style.background,"Movie_P"+i+"_N"+j);
                     }
                     window.addEventListener("renderComplete",getDominantImageColor());
                   }
-             //    }
-             // if(!isReady === undefined)
-             //    {
                 if(i==10)
                   {
                     // First 10 pages finished loading, now we can dispatch the the content aware background modification.
