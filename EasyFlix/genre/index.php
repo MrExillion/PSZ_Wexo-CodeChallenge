@@ -55,7 +55,7 @@
       }
     </style>
     <ScrollRestoration />
-    <script type="text/javascript" crossorigin="Anonymous">
+    <script type="text/javascript" crossorigin="anonymous">
     const options = {
       method: 'GET',
       headers: {
@@ -153,7 +153,7 @@
                   newNode.setAttribute("style","size:750px 500px; background:darkred;");
 
                   const movieCover = document.createElement("img");
-                  newNode.appendChild(movieCover);
+
                   movieCover.crossOrigin="anonymous";
                   movieCover.setAttribute("class","movieCoverClass");
                   movieCover.style.size="100% 100%";
@@ -166,8 +166,8 @@
                   //movieCover.src = "https://image.tmdb.org/t/p/w500"+res2[xx][yy].poster_path+"?token="+options.headers.Authorization.split("Bearer ");
 
                     movieCover.alt = "image";
-                    movieCover.src = "https://image.tmdb.org/t/p/w500"+res2[xx][yy].poster_path;
-
+                    movieCover.src = "https://image.tmdb.org/t/p/w500"+res2[xx][yy].poster_path+"?not-from-cache-please"; // ?not-from-cache-please is a simple but effective fix for CORS validation lag.
+                    newNode.appendChild(movieCover);
 
 
                   const movieTitle = document.createElement("h1");
@@ -222,7 +222,19 @@
             // .imageReady(imageReady => imageReady.status)
           }
           console.log(isReady[9], !isReady[9] == null);
-          if(isReady[10])
+          function areAllPagesReady(arr)
+          {
+            for(let k=0;k<arr.length;k++)
+            {
+              if(!arr[k])
+                {
+                    return false;
+                }
+            }
+            return true;
+          }
+
+          if(areAllPagesReady(isReady))
              {
              for(let i=1;i<=10;i++)
                  {
@@ -471,7 +483,7 @@
                  maxattempts--;
                  try
                  {
-                   color = colorThief.getColor(image);
+                   color = await colorThief.getColor(image);
                    if(color)
                      {
                        return color;
