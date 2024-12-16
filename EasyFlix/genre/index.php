@@ -181,7 +181,7 @@
                   moviePageBtn.style.display="block";
                   moviePageBtn.style.width="40%";
                   moviePageBtn.style.translate="80% -50%";
-                  moviePageBtn.style.background="#FF444444";
+                  moviePageBtn.style.background="#FFFFFF44";
                   moviePageBtn.style.borderRadius="8px";
                   moviePageBtn.style.fontFamily="Work Sans";
                   moviePageBtn.setAttribute("argument",res2[xx][yy].id);
@@ -189,6 +189,11 @@
                   moviePageBtn.onclick = function(self){ movieDetailsPage(moviePageBtn.getAttribute("argument"),moviePageBtn.getAttribute("argument2")); }
                   moviePageBtn.style.fontSize="150%";
                   moviePageBtn.style.color="white";
+                  // moviePageBtn.setAttribute("style",moviePageBtn.getAttribute("style")
+                  //   +);
+                  const moviePageBtn_Css = document.createElement("style");
+                  moviePageBtn_Css.innerHTML = "div#"+newNode.id+">button{box-shadow: inset black 0px -10px 25px; &:hover{box-shadow: inset var(--contextHover_"+newNode.id+") 0px 10px 25px 2px;}}"
+                     newNode.appendChild(moviePageBtn_Css);
 
                   imageReady = async ()=> { return await movieCover.decode();};
                 //_.defer(function() {
@@ -328,6 +333,19 @@
                             }
                           // set the background color
                           //background.style.background = "rgba(" + color + ",255);";
+                          let css = await background.getElementsByTagName('style')[0];
+                          // if(document.documentElement.getAttribute("style") == null){
+                          //   document.documentElement.setAttribute("style",":root{--contextHover_"+background.id+": rgba("+color+",255);}");
+                          // }
+                          // document.documentElement.setAttribute("style",document.documentElement.getAttribute("style").replace(/.$/,"--contextHover_"+background.id+": rgba("+color+",255);}"));
+                          // document.documentElement.style.setProperty("contextHover_"+background.id,"rgba("+color+",255);");
+                          console.log(css.innerHTML,"var(--contextHover_"+newNode.id+")");
+                           // css.innerHTML.replace("var(--contextHover_"+newNode.id+")", "rgba("+color+",255)");
+                          let css2 = document.createElement("style");
+                            css2.innerHTML = ":root{--contextHover_"+background.id+": rgba("+color+",255);}";
+                            //css.innerHTML.replace("var(--contextHover_"+newNode.id+") 0px 10px 25px 2px", "rgba("+color+",255) 0px 10px 25px 2px !important");
+                            newNode.appendChild(css2);
+
                           console.log(background.style.background,"Movie_P"+i+"_N"+j);
                           background.setAttribute("style",background.getAttribute("style")+" background: rgba(" + color + ",255);");
                     }
@@ -523,6 +541,11 @@
 
            // set the background color
            //background.style.background = "rgba(" + color + ",255);";
+           if(document.documentElement.getAttribute("style") == null){
+             document.documentElement.style.setProperty("--contextHover_"+background.id,"rgba("+color+",255);");
+           }
+           document.documentElement.style.setProperty("--contextHover_"+background.id,"rgba("+color+",255);");
+           //document.documentElement.setAttribute("style",document.documentElement.getAttribute("style").replace(/.$/,"--contextHover_"+background.id+": rgba("+color+",255);}"));
            background.setAttribute("style",background.getAttribute("style")+" background: rgba(" + color + ",255);");
        }
 
