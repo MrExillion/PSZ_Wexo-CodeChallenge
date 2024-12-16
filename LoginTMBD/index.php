@@ -128,14 +128,38 @@ if(ValidatedToken)
     body: JSON.stringify({username: username , password: password, request_token: RequestTokenResponse.request_token})
   };
 
-  fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?redirect_to='+window.location.origin+"/EasyFlix", ValidatedTokenLoginOptions)
-     .then(res => { console.log(res.json()); res.json();})
-     .then(res => {  setCookie(username,RequestTokenResponse.request_token,res.session_id,RequestTokenResponse.expires_at); console.log(getCookie(username),res); if('http://localhost:3000' == window.location.origin){
-       location.href = "../EasyFlix/";
-     }})
+const ValidatedTokenLoginResponse = await  fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?redirect_to='+window.location.origin+"/EasyFlix", ValidatedTokenLoginOptions)
+     .then(res => res.json())
+     .then(res => {
+
+        return res;
+
+
+
+      })
      .catch(err => console.error(err));
+if(ValidatedTokenLoginResponse)
+ {
 
+         const SessionIdRequestOptions = {
+           method: 'POST',
+           headers: {
+             accept: 'application/json',
+             'content-type': 'application/json',
+             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNzQzYWQ4NWM1MTU1NmUzZDgyMDliYzkwMWVlNzY0NiIsIm5iZiI6MTczMzc0NTkxNy40OTQwMDAyLCJzdWIiOiI2NzU2ZGNmZDZlMGJlZDI2NmI3ZmFiM2QiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.3eEChcFzcTubHssYx6QAOY3yIJlmisJQWH3ynQS7uEA'
+           },
+           body: JSON.stringify({request_token: RequestTokenResponse.request_token})
+         };
+     fetch('https://api.themoviedb.org/3/authentication/session/new', SessionIdRequestOptions)
+       .then(res => res.json())
+       .then(res => {console.log(res)
+         setCookie(username,RequestTokenResponse.request_token,res.session_id,RequestTokenResponse.expires_at); console.log(getCookie(username),res); if('http://localhost:3000' == window.location.origin){
+         location.href = "../EasyFlix/";
+        }
 
+       })
+       .catch(err => console.error(err));
+}
 }
 }
 }
