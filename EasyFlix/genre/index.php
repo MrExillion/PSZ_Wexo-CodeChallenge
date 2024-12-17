@@ -109,10 +109,11 @@
       console.log(pages);
       let movieCoverClassArrayPageSize;
       count = res.total_results;
+      const numPageLoadedInitially = 1;
       async function asyncWrapper_first10PagesLoad()
         {
           let isReady = [];
-          for(let i=1;i<=11;i++)
+          for(let i=1;i<=numPageLoadedInitially+1;i++)
           {
             isReady[i-1] = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page='
               +i
@@ -131,7 +132,7 @@
               for (const xx in res2) {
 
                 for (const yy in res2[xx]) {
-                  if(i == 11)
+                  if(i == numPageLoadedInitially+1)
                     {
                       imageReady = async ()=> {
                           let  t1 = await document.getElementById("Movie_P"+i-1+"_N0");
@@ -236,7 +237,7 @@
 
           if(areAllPagesReady(isReady))
              {
-             for(let i=1;i<=10;i++)
+             for(let i=1;i<=numPageLoadedInitially;i++)
                  {
                   // if((i-1)%40==0)
                   // {
@@ -248,7 +249,7 @@
                   console.log(!movieCoverClassArrayPageSize,movieCoverClassArrayPageSize);
                   if(movieCoverClassArrayPageSize === undefined)
                     {
-                      movieCoverClassArrayPageSize=movieCoverClassArray.length/10;
+                      movieCoverClassArrayPageSize=movieCoverClassArray.length/numPageLoadedInitially;
                     }
                   for(j=0;j<movieCoverClassArrayPageSize;j++)
                   {
@@ -262,7 +263,7 @@
                       let currentDate = null;
                       let maxattempts = 20;
                       // initialize colorThief
-                      let colorThief = new ColorThief();
+                      let colorThief = await new ColorThief();
                       let color;
                       while(!ColorIsSet)
                         {
@@ -345,14 +346,14 @@
                             }
                           let css = document.createElement("style");
                           css.innerHTML = ":root{--contextHover_"+background.id+": rgba("+color+",255);}";
-                          newNode.appendChild(css);
+                          background.appendChild(css);
                           // set the background color
                           background.setAttribute("style",background.getAttribute("style")+" background: var(--contextHover_"+newNode.id+");");
                           // console.log(background.style.background,"Movie_P"+i+"_N"+j);
                     }
                     window.addEventListener("renderComplete",getDominantImageColor());
                   }
-                if(i==10)
+                if(i==numPageLoadedInitially)
                   {
                     // First 10 pages finished loading, now we can dispatch the the content aware background modification.
                     waitForRender();
@@ -405,7 +406,7 @@
            movieCover.crossOrigin="anonymous";
            movieCover.setAttribute("class","movieCoverClass");
            movieCover.style.size="100% 100%";
-           movieCover.src = "https://image.tmdb.org/t/p/w500"+res2[xx][yy].poster_path;
+           movieCover.src = "https://image.tmdb.org/t/p/w500"+res2[xx][yy].poster_path+"?not-from-cache-please";
            // sleep(120);
 
            const movieTitle = document.createElement("h1");
@@ -419,7 +420,7 @@
            moviePageBtn.style.display="block";
            moviePageBtn.style.width="40%";
            moviePageBtn.style.translate="80% -50%";
-           moviePageBtn.style.background="#FF444444";
+           moviePageBtn.style.background="var(--contextHover_"+newNode.id+")";
            moviePageBtn.style.borderRadius="8px";
            moviePageBtn.style.fontFamily="Work Sans";
            moviePageBtn.setAttribute("argument",res2[xx][yy].id);
@@ -427,7 +428,9 @@
            moviePageBtn.onclick = function(self){ movieDetailsPage(moviePageBtn.getAttribute("argument"),moviePageBtn.getAttribute("argument2")); }
            moviePageBtn.style.fontSize="150%";
            moviePageBtn.style.color="white";
-
+           const moviePageBtn_Css = document.createElement("style");
+           moviePageBtn_Css.innerHTML = "div#"+newNode.id+">button{box-shadow: inset black 0px -10px 25px; &:hover{box-shadow: inset var(--contextHover_"+newNode.id+") 0px 10px 25px 2px;}}"
+              newNode.appendChild(moviePageBtn_Css);
 
 
 
@@ -458,7 +461,7 @@
              let currentDate = null;
              let maxattempts = 20;
              // initialize colorThief
-             let colorThief = new ColorThief();
+             let colorThief = await new ColorThief();
              let color;
              while(!ColorIsSet)
                {
@@ -537,14 +540,20 @@
                }
              }
 
+            if(background.getElementsByTagName('style').length < 2)
+              {
+                let css2 = document.createElement("style");
+                css2.innerHTML = ":root{--contextHover_"+background.id+": rgba("+color+",255);}";
+                background.appendChild(css2);
+              }
+              else
+                {
+                  background.getElementsByTagName('style')[1].innerHTML = ":root{--contextHover_"+background.id+": rgba("+color+",255);}";
+                }
+
            // set the background color
-           //background.style.background = "rgba(" + color + ",255);";
-           if(document.documentElement.getAttribute("style") == null){
-             document.documentElement.style.setProperty("--contextHover_"+background.id,"rgba("+color+",255);");
-           }
-           document.documentElement.style.setProperty("--contextHover_"+background.id,"rgba("+color+",255);");
-           //document.documentElement.setAttribute("style",document.documentElement.getAttribute("style").replace(/.$/,"--contextHover_"+background.id+": rgba("+color+",255);}"));
-           background.setAttribute("style",background.getAttribute("style")+" background: rgba(" + color + ",255);");
+           background.style.setProperty("background", "var(--contextHover_"+background.id+")");
+             //rgba(" + color + ",255);");
        }
 
          //window.dispatchEvent(fetchCompletionCallback);

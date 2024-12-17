@@ -5,3 +5,5 @@ header(header: 'Access-Control-Allow-Headers: Content-Type');
 $headers = getallheaders();
 
 ?>
+<a href="./LoginTMDB/"><h1> → Login To TMDB </h1></a>
+<a href="./EasyFlix/"><h1> → EasyFlix</h1></a>

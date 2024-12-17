@@ -1,5 +1,5 @@
-<!-- <!doctype php> -->
-<?php ?>
+<!doctype php>
+ <?php ?>
 
 <!DOCTYPE html>
 <!-- <script type="text/javascript" runAt='server' data-main="../requireConfigs" src='../node_modules/requirejs/require.js'>

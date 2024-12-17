@@ -17,6 +17,7 @@
 </div></a>
 <?php
 include("../easyflixheadertitle.svg");
+
 ?>
 <h1 id="pagetitle"></h1>
 </header>
