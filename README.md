@@ -19,6 +19,7 @@ Instructions
 - step 5: follow this guide: https://www.youtube.com/watch?v=aOPIB_9zoIk
 - step 6: start the PHP server by serving the php in the repos root.
 - step 7: follow Method 1 steps but with localhost:3000/ as your root inpladce of zuricho.dk/WexoCodeChallenge/
+-- theres a small catch in that the actual repository the folder structure is a little bit different. It should be simple to get around though   
 
 
 Login can be omitted by going directly to
