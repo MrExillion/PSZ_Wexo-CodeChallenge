@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--link rel="stylesheet" href="./movieTile.css"-->
+    <link rel="stylesheet" href="../globalStyles.css">
+  </head>
+<body>
+<header class="subPageHeader">
+  <a target="_self" href="../">
+    <div id='returnHome'>
+      <p>Home</p>
+  </div>
+</a>
+<h1 id="pagetitle"></h1>
+</header>
+<section>
+  <div id="response"></div>
+  <script type="text/javascript">
+    let hrfString = window.location.href.toString();
+    let url = new URL(hrfString);
+    let movieIdParam = url.searchParams.get("movieId");
+    const divElement = document.getElementById("response");
+    const fetchJSONDataCallback = new Event("JSONDataCallback",{"bubbles":true,"cancelable":false});
+    const requestDataFromTMDBCallback = new Event("DataFromTMDBCallback",{"bubbles":true,"cancelable":false});
+    function fetchJSONData(payload)
+    {
+      function payloadConversion()
+      {
+
+        const callbackEvent = new Event("LocalFetch_CallBackEvent()",{"bubbles":true,"cancelable":false});
+        window.addEventListener("LocalFetch_CallBackEvent()",async function(){const _script = document.createElement("script"); document.getElementById("response").parentElement.appendChild(_script); _script.innerHTML = "function callbackfunc(){"+payload+"; } callbackfunc();"})
+        window.dispatchEvent(callbackEvent);
+
+      }
+                window.addEventListener("JSONDataCallback",async function(){ const delegate = ()=>{payloadConversion()}; const _script = document.createElement("script"); document.getElementById("response").parentElement.appendChild(_script); _script.innerHTML = "const wishlistdata = parseJSON();" + delegate +"; console.log(wishlistdata); parseJSONCallBack(); "});
+                    fetch('./wishlistdata.json')
+                    .then(res=>
+                      {
+                      if (!res.ok)
+                          {
+                              throw new Error
+                                        (`HTTP error! Status: ${res.status}`);
+                          }
+                          return res.json()
+                      })
+                    .then(data=> {
+                        //console.log(data);
+                        divElement.setAttribute("data",JSON.stringify(data));
+
+                        //for(const x in data)
+                        //{
+                        //  console.log(x);
+                        //  divElement.setAttribute(""+toString(x),JSON.stringify(data[x]));
+                        //}
+
+
+
+                    })
+
+                    .catch(err => console.log(err))
+                    .finally(()=>window.dispatchEvent(fetchJSONDataCallback));
+
+
+    }
+
+    function requestDataFromTMDB(uri,out,payload)
+    {
+      function payloadConversion()
+      {
+        const callbackEvent = new Event(out+"_CallBackEvent()",{"bubbles":true,"cancelable":false});
+        window.addEventListener(out+"_CallBackEvent()",async function(){const _script = document.createElement("script"); document.getElementById("response").parentElement.appendChild(_script); _script.innerHTML = "function callbackfunc(){"+payload+"; } callbackfunc();"})
+        window.dispatchEvent(callbackEvent);
+      }
+
+
+      window.addEventListener("DataFromTMDBCallback",async function(){const delegate = ()=>{payloadConversion()}; const _script = document.createElement("script"); document.getElementById("response").parentElement.appendChild(_script); _script.innerHTML = "const "+out+' = JSON.parse(divElement.getAttribute("data")).'+out+"; console.log("+out+"); function "+out+"_callback(){"+delegate+"; }; executionBody();"})
+    fetch(uri, wishlistdata.APIdata)
+    .then(res=>
+      {
+      if (!res.ok)
+          {
+              throw new Error
+                        (`HTTP error! Status: ${res.status}`);
+          }
+          return res.json()
+      })
+    .then(data=> {
+      if(divElement.getAttribute("data") != null)
+        {
+          divElement.setAttribute("data",divElement.getAttribute("data").replace(/.$/,',"'+out+'":'+JSON.stringify(data)+'}'));
+        }
+        else
+        {
+          divElement.setAttribute("data",'{"'+out+':"'+JSON.stringify(data)+'}');
+        }
+
+        console.log(data);
+    })
+    .catch(err => console.log(err))
+    .finally(()=>window.dispatchEvent(requestDataFromTMDBCallback));
+
+    }
+
+
+
+    function parseJSON(){ return JSON.parse(divElement.getAttribute("data"));}
+    function executeRequests(delegate){
+      //var delegate = passThrough;
+      requestDataFromTMDB("https://api.themoviedb.org/3/genre/movie/list?language=en","genre",delegate)
+
+
+      // should have addEventListener and listen for the trigger of a
+
+    }
+
+fetchJSONData();
+
+</script>
+<script type="text/javascript">
+
+function parseJSONCallBack(){
+  //console.log(wishlistdata);
+  //this entire script functions as a delegate, all code is included in this function as a callback.
+
+
+  executeRequests();
+
+
+
+
+
+  console.log(wishlistdata);
+
+
+
+
+}
+function executionBody(){
+  console.log(genre);
+  console.log("blah");
+}
+
+  </script>
+</section>
+</body>
+</html>
