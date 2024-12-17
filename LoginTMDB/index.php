@@ -153,9 +153,10 @@ if(ValidatedTokenLoginResponse)
      fetch('https://api.themoviedb.org/3/authentication/session/new', SessionIdRequestOptions)
        .then(res => res.json())
        .then(res => {console.log(res)
-         setCookie(username,RequestTokenResponse.request_token,res.session_id,RequestTokenResponse.expires_at); console.log(getCookie(username),res); if('http://localhost:3000' == window.location.origin){
+         setCookie(username,RequestTokenResponse.request_token,res.session_id,RequestTokenResponse.expires_at); console.log(getCookie(username),res);
+         // if('http://localhost:3000' == window.location.origin){
          location.href = "../EasyFlix/";
-        }
+        // }
 
        })
        .catch(err => console.error(err));
